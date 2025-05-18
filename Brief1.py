@@ -1,6 +1,6 @@
 import gradio as gr
 from PIL import Image
-from diffusers import StableDiffusionImg2ImgPipeline
+from diffusers import StableDiffusionImg2ImgPipeline, DDIMScheduler
 import torch
 
 # Detect device
@@ -9,10 +9,12 @@ dtype = torch.float16 if device == "cuda" else torch.float32
 
 # Load the model with appropriate dtype
 pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
-    "runwayml/stable-diffusion-v1-5",
+    "stabilityai/stable-diffusion-2-1",
     torch_dtype=dtype,
     use_safetensors=True
 ).to(device)
+
+pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
 
 # Resize uploaded image to selected aspect ratio
 def resize_to_aspect(image, aspect_ratio):
@@ -28,7 +30,7 @@ def resize_to_aspect(image, aspect_ratio):
     return image
 
 def resize_to_512(image):
-    return image.resize((512, 512))
+    return image.resize((768, 768))
 
 
 #
@@ -36,7 +38,7 @@ def resize_to_512(image):
 def generate_img(product_img, prompt, aspect_ratio):
     resized_img = resize_to_aspect(product_img, aspect_ratio).convert("RGB")
     resized_img = resize_to_512(resized_img)  # Required by the model
-    output = pipe(prompt=prompt, image=resized_img, strength=0.75, guidance_scale=7.5)
+    output = pipe(prompt=prompt,  negative_prompt="cartoon, anime, painting, blurry, unrealistic, low quality", image=resized_img, strength=0.75, guidance_scale=7.5)
     return output.images[0]
 
 # Gradio UI
@@ -48,8 +50,8 @@ gr.Interface(
         gr.Dropdown(["1:1", "16:9", "4:5", "9:16"], label="Aspect Ratio", value="1:1")
     ],
     # outputs=gr.Image(label="Generated Image", type="pil"),
-    outputs=gr.File(label='Download Image'),
+    outputs=gr.Image(label='Download Image'),
     title="Image-to-Image Product Generator",
     description="upload a product image, describe your idea, and select the output aspect ratio."
 
-).launch()
+).launch(share=True, ssr_mode=False)
