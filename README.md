@@ -1,3 +1,4 @@
+Brief 1 – AI challenge – Plus Also Studios
 ________________________________________
 Image-to-Image Product Generator
 
@@ -6,7 +7,7 @@ It allows users to generate a product marketing image by uploading a reference i
 It uses the Stable Diffusion Img2Img model from Hugging Face, and the entire application is built using Gradio
 
  Features
-- Upload any product image (e.g. shoes, furniture, electronics).
+- Upload any product image (e.g., shoes, furniture, electronics).
 - Provide a text prompt to guide generation (e.g. "make this product look futuristic and neon-lit").
 - Choose an output aspect ratio (1:1, 16:9, 4:5, 9:16).
 - View and download the generated image.
@@ -22,17 +23,11 @@ Tech Stack
 Setup Instructions - locally
 
 1. Clone the Repository
-
-git clone https://github.com/YOUR_USERNAME/Image2Image_generation.git
-cd Image2Image_generation
-
-2. Create and Activate a Virtual Environment (Recommended)
-python -m venv venv
+2. Create and Activate a Virtual Environment 
 3. Install Dependencies
 pip install -r requirements.txt
-GPU and want faster inference:
+GPU and faster inference:
 Ensure that torch is installed with CUDA support:
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 ________________________________________Run this on hugging-face -
 Open the displayed URL in your browser.
 This will start a local Gradio interface.
@@ -40,8 +35,7 @@ Upload an image, write a prompt, and select the aspect ratio.
 View and download your AI-generated image.
 ________________________________________
 Testing Procedure
-No unit tests are defined (as the application is interface-focused), but you can verify that it's working correctly by:
-Uploading a test image (e.g., a cup, a can of beer).
+Upload a test image (e.g., a cup, a can of beer).
 Using a basic prompt like:
 make it look like a mug with Christmas/Halloween decorations
 make it look like a can of coke
@@ -74,9 +68,9 @@ The model runs faster and better on GPU.
 Pictures used are either in .png or .jpeg format
 This model takes comparatively a little longer as it is running on cpu space of hugging -face
 ________________________________________
-Maintainer
+Links
 Snair94
-GitHub: https://github.com/snair94
+GitHub: snair94/Image2Image_generation: This project takes an input image and with the given aspect ratio, generates another image based on the prompt given and lets you download this new image
 Email: sn94.ecb@gmail.com
 ________________________________________
 
